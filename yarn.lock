@@ -910,14 +910,14 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-9.0.1.tgz#c27b391d8457d1e893f1eddeaf5e5412d12ffbb5"
   integrity sha512-6It2EVfGskxZCQhuykrfnALg7oVeiI6KclWSmGDqB0AiInVrTGB9Jp9i4/Ad21u9Jde/voVQz6eFX/eSg/UsPA==
 
-"@deck.gl/aggregation-layers@7.0.6":
+"@deck.gl/aggregation-layers@7.0.6", "@deck.gl/aggregation-layers@^7.0.6":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@deck.gl/aggregation-layers/-/aggregation-layers-7.0.6.tgz#23b1ee91117fdcc5236dcff900e19fa8430f0f54"
   integrity sha512-y2W1wLMZFdY9ztIiTkButdC77gxHHLB4y7qOba9YW5JgzbothJS4wSZO5U/AeJhi5v+wpWR189XZ74KrBpRbNg==
   dependencies:
     d3-hexbin "^0.2.1"
 
-"@deck.gl/core@7.0.6":
+"@deck.gl/core@7.0.6", "@deck.gl/core@^7.0.6":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@deck.gl/core/-/core-7.0.6.tgz#90363c5df802bc185fabe9f8fa6df6d054ce0a14"
   integrity sha512-hbgrJGUh4U8MP1kUe3kSBrE072gTMXMyMtyhUgz4Y+j530CwCB6+EMJEy8Ni2wEQOsoEjgGCpYRdSKVKrhfiTg==
@@ -950,7 +950,7 @@
   dependencies:
     d3-dsv "^1.0.8"
 
-"@deck.gl/layers@7.0.6":
+"@deck.gl/layers@7.0.6", "@deck.gl/layers@^7.0.6":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@deck.gl/layers/-/layers-7.0.6.tgz#b6a00013cd5820a78e71164673a0e58ea9995a2b"
   integrity sha512-C1zMaGm7SFCxq+WiJqFpIsiYL3s9M0O2Y4DvwAIoJXVYdnHQxyWj8QkIKZ9M4K5UeS0eGwgTeZ8O6YqdRi0+WA==
@@ -973,7 +973,7 @@
     "@loaders.gl/core" "^1.0.3"
     "@loaders.gl/images" "^1.0.3"
 
-"@deck.gl/react@7.0.6":
+"@deck.gl/react@7.0.6", "@deck.gl/react@^7.0.6":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@deck.gl/react/-/react-7.0.6.tgz#275d08e9512f4026b7bd68bad493359b73d0ab78"
   integrity sha512-UYNQLaJHzHXO2yVFoFm+apJe6+MYz/PiG43DusPMb978obc6r5fQQJzzMm2qOMygqQADrXqgQ5tOkzr0fM7sAw==
