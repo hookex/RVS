@@ -4,9 +4,9 @@ import { LineLayer, ScatterplotLayer, ArcLayer } from '@deck.gl/layers';
 
 // Viewport settings
 const viewState = {
-  longitude: -122.41669,
-  latitude: 37.781,
-  zoom: 15,
+  longitude: 0.5,
+  latitude: 0.5,
+  zoom: 1,
   pitch: 0,
   bearing: 0
 };
@@ -24,15 +24,11 @@ const scatterLayer = new ScatterplotLayer({
 })
 
 const arcData = [{
-  inbound: 72633,
-  outbound: 74735,
   from: {
-    name: '19th St. Oakland (19TH)',
-    coordinates: [-122.269029, 37.80787]
+    coordinates: [0, 0]
   },
   to: {
-    name: '12th St. Oakland City Center (12TH)',
-    coordinates: [-122.271604, 37.803664]
+    coordinates: [1, 1]
   }
 }];
 
@@ -40,19 +36,16 @@ const arcData = [{
 const arcLayer = new ArcLayer({
   id: 'arc-layer',
   data: arcData,
-  pickable: true,
-  getWidth: 12,
+  pickable: false,
+  getWidth: 100,
   getSourcePosition: d => d.from.coordinates,
   getTargetPosition: d => d.to.coordinates,
   getSourceColor: d => [Math.sqrt(d.inbound), 140, 0],
   getTargetColor: d => [Math.sqrt(d.outbound), 140, 0],
-  onHover: ({ object, x, y }) => {
-    const tooltip = `${object.from.name} to ${object.to.name}`;
-  }
 })
 
 const App = ({ data, viewport }) => {
-  return (<DeckGL viewState={viewState} layers={[lineLayer]} />);
+  return (<DeckGL viewState={viewState} layers={[arcLayer]} />);
 }
 
 export default App;
