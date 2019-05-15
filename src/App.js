@@ -1,16 +1,7 @@
 import React from 'react';
 import DeckGL from '@deck.gl/react';
-import { LineLayer, ScatterplotLayer, ArcLayer } from '@deck.gl/layers';
+import { LineLayer, ScatterplotLayer, ArcLayer, PolygonLayer } from '@deck.gl/layers';
 import { GridLayer, ScreenGridLayer } from '@deck.gl/aggregation-layers';
-
-// Viewport settings
-const viewState = {
-  longitude: 50,
-  latitude: -20,
-  zoom: 2,
-  // pitch: 100,
-  // bearing: 100
-};
 
 // Data to be used by the LineLayer
 const data = [{ sourcePosition: [-122.41669, 37.7853], targetPosition: [-122.41669, 37.781] }];
@@ -47,7 +38,7 @@ const arcLayer = new ArcLayer({
 
 const gridLayer = new ScreenGridLayer({
   id: 'screen-grid-layer',
-  data: getGridData(),
+  data,
   pickable: false,
   opacity: 1,
   cellSizePixels: 40,
@@ -61,44 +52,111 @@ const gridLayer = new ScreenGridLayer({
   ],
   getPosition: d => d.COORDINATES,
   getWeight: d => d.SPACES,
-  onHover: ({object, x, y}) => {
+  onHover: ({ object, x, y }) => {
     console.log('x, y', x, y)
   }
 });
 
-const App = ({ data, viewport }) => {
-  return (<DeckGL viewState={viewState} layers={[gridLayer]} />);
+const polygonData =
+  [
+    // {
+    //   // Simple polygon (array of coords)
+    //   contour: [[-122.4, 37.7], [-122.4, 37.8], [-122.5, 37.8], [-122.5, 37.7]],
+    // },
+    {
+      // Simple polygon (array of coords)
+      contour: [[1, 1], [1, 2], [2, 2], [2, 1]],
+    },
+  ]
+
+
+
+
+
+// Viewport settings
+const viewState = {
+  longitude: 0,
+  latitude: 0,
+  zoom: 4,
+  // pitch: 100,
+  // bearing: 100
+};
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        polygonLayer: new PolygonLayer({
+          id: 'polygon-layer',
+          data: getRectData(),
+          pickable: false,
+          stroked: true,
+          filled: true,
+          // wireframe: true,
+          lineWidthMinPixels: 1,
+          getPolygon: d => d.contour,
+          // getElevation: d => d.population / d.area / 10,
+          getFillColor: d => {
+            var colors = [[79, 134, 236], [217, 80, 63], [242, 189, 66], [88, 165, 92]]
+            let num = parseInt(getRandom(4))
+            return colors[num]
+          },
+          getLineColor: [255, 255, 255],
+          getLineWidth: 2,
+          onHover: ({ object, x, y }) => {
+            // const tooltip = `${object.zipcode}\nPopulation: ${object.population}`;
+            /* Update tooltip
+               http://deck.gl/#/documentation/developer-guide/adding-interactivity?section=example-display-a-tooltip-for-hovered-object
+            */
+          }
+        })
+      })
+    }, 16)
+  }
+
+  render() {
+    return (<DeckGL viewState={viewState} layers={[this.state.polygonLayer]} />);
+  }
 }
 
 export default App;
 
 
-function getGridData() {
-
+function getRectData() {
   let row = 100;
 
   let result = [];
-  let startX = 0;
+  let startX = -row / 2;
 
   while (row--) {
     startX += 1
 
     let col = 100;
-    let startY = 0;
+    let startY = -col / 2;
 
     while (col--) {
-      startY -= 1
+      startY += 1
 
       result.push({
-        "RACKS": 1,
-        "SPACES": 1,
-        "COORDINATES": [
-          startX,
-          startY
-        ]
+        contour: [[startX, startY], [startX + 1, startY], [startX + 1, startY + 1], [startX, startY + 1]],
       })
     }
   }
 
   return result
+}
+
+function getRandom(num1, num2) {
+  if (num1 !== undefined && num2 !== undefined) {
+    return num1 + Math.random() * (num2 - num1);
+  } else if (num1 !== undefined && num2 === undefined) {
+    return Math.random() * num1;
+  } else {
+    return Math.random();
+  }
 }
