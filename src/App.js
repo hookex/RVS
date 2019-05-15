@@ -107,7 +107,7 @@ class App extends React.Component {
             return colors[num]
           },
           getLineColor: [255, 255, 255],
-          getLineWidth: 2,
+          getLineWidth: 1,
           onHover: ({ object, x, y }) => {
             // const tooltip = `${object.zipcode}\nPopulation: ${object.population}`;
             /* Update tooltip
