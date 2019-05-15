@@ -79,7 +79,7 @@ const viewState = {
   longitude: 0,
   latitude: 0,
   zoom: 2,
-  // pitch: 100,
+  pitch: 50,
   // bearing: 100
 };
 
@@ -101,7 +101,7 @@ class App extends React.Component {
           stroked: false,
           filled: true,
           // wireframe: true,
-          lineWidthMinPixels: 0,
+          // lineWidthMinPixels: 1,
           getPolygon: d => d.contour,
           // getElevation: d => d.population / d.area / 10,
           getFillColor: d => {
@@ -109,8 +109,8 @@ class App extends React.Component {
             let num = parseInt(getRandom(4))
             return colors[num] || [0, 0, 0 ]
           },
-          getLineColor: [255, 255, 255],
-          getLineWidth: 0,
+          // getLineColor: [255, 255, 255],
+          // getLineWidth: 0,
           // onHover: ({ object, x, y }) => {
           //   // const tooltip = `${object.zipcode}\nPopulation: ${object.population}`;
           //   /* Update tooltip
@@ -119,7 +119,7 @@ class App extends React.Component {
           // }
         })
       })
-    }, 1000)
+    }, 100)
   }
 
   render() {
@@ -137,6 +137,7 @@ export default App;
 
 function getRectData() {
   let row = 128;
+  let border = 0.1;
 
   let result = [];
   let startX = -row / 2;
@@ -151,7 +152,7 @@ function getRectData() {
       startY += 1
 
       result.push({
-        contour: [[startX, startY], [startX + 1, startY], [startX + 1, startY + 1], [startX, startY + 1]],
+        contour: [[startX + border, startY + border], [startX + 1 - border, startY + border], [startX + 1 - border, startY + 1- border], [startX + border, startY + 1 - border]],
       })
     }
   }
