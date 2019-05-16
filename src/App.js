@@ -54,7 +54,7 @@ const gridLayer = new ScreenGridLayer({
   getPosition: d => d.COORDINATES,
   getWeight: d => d.SPACES,
   onHover: ({ object, x, y }) => {
-    
+
   }
 });
 
@@ -80,6 +80,7 @@ const viewState = {
   latitude: 0,
   zoom: 2,
   pitch: 50,
+  controller: true
   // bearing: 100
 };
 
@@ -90,43 +91,45 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(() => {
-      let data = getRectData()
-      
-      this.setState({
-        polygonLayer: new PolygonLayer({
-          id: 'polygon-layer',
-          data: data,
-          pickable: false,
-          stroked: false,
-          filled: true,
-          // wireframe: true,
-          // lineWidthMinPixels: 1,
-          getPolygon: d => d.contour,
-          // getElevation: d => d.population / d.area / 10,
-          getFillColor: d => {
-            var colors = [[79, 134, 236], [217, 80, 63], [242, 189, 66], [88, 165, 92]]
-            let num = parseInt(getRandom(4))
-            return colors[num] || [0, 0, 0 ]
-          },
-          // getLineColor: [255, 255, 255],
-          // getLineWidth: 0,
-          // onHover: ({ object, x, y }) => {
-          //   // const tooltip = `${object.zipcode}\nPopulation: ${object.population}`;
-          //   /* Update tooltip
-          //      http://deck.gl/#/documentation/developer-guide/adding-interactivity?section=example-display-a-tooltip-for-hovered-object
-          //   */
-          // }
-        })
-      })
-    }, 100)
+    this.animate()
+  }
+
+  animate() {
+    this.setState({})
+    requestAnimationFrame(() => this.animate());
   }
 
   render() {
+    const polygonLayer = new PolygonLayer({
+      id: 'polygon-layer',
+      data: getRectData(),
+      pickable: false,
+      stroked: false,
+      filled: true,
+      extruded: true,
+      // wireframe: true,
+      // lineWidthMinPixels: 1,
+      getPolygon: d => d.contour,
+      // getElevation: d => d.population / d.area / 10,
+      getFillColor: d => {
+        var colors = [[79, 134, 236], [217, 80, 63], [242, 189, 66], [88, 165, 92]]
+        let num = parseInt(getRandom(4))
+        return colors[num] || [0, 0, 0]
+      },
+      // getLineColor: [255, 255, 255],
+      // getLineWidth: 0,
+      // onHover: ({ object, x, y }) => {
+      //   // const tooltip = `${object.zipcode}\nPopulation: ${object.population}`;
+      //   /* Update tooltip
+      //      http://deck.gl/#/documentation/developer-guide/adding-interactivity?section=example-display-a-tooltip-for-hovered-object
+      //   */
+      // }
+    })
+
     return (
       <div>
         <FPSStats />
-        <DeckGL viewState={viewState} layers={[this.state.polygonLayer]} />
+        <DeckGL viewState={viewState} layers={[polygonLayer]} />
       </div>
     );
   }
@@ -152,7 +155,7 @@ function getRectData() {
       startY += 1
 
       result.push({
-        contour: [[startX + border, startY + border], [startX + 1 - border, startY + border], [startX + 1 - border, startY + 1- border], [startX + border, startY + 1 - border]],
+        contour: [[startX + border, startY + border], [startX + 1 - border, startY + border], [startX + 1 - border, startY + 1 - border], [startX + border, startY + 1 - border]],
       })
     }
   }
